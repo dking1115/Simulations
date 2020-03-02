@@ -13,7 +13,7 @@ class Deck(object):
     def create(self):
         self.cards = []
         for i in range(4):
-            for j in range(0,14):
+            for j in range(0,13):
                 self.cards.append(Card(i, j))
 
     def sort(self):
