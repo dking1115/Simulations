@@ -4,7 +4,7 @@ import sys
 import pygame
 import time
 from Draw_Game import draw_card
-size = [400, 400]
+size = [800, 400]
 screen = pygame.display.set_mode(size)
 def shuffle(cards,discard):
         for q in discard:
@@ -12,7 +12,7 @@ def shuffle(cards,discard):
         discard=[]
         n = len(cards)
         for i in range(n-1,0,-1): 
-            j = random.randint(0,i+1) 
+            j = random.randint(0,i) 
             c=cards[i]
             cards[i]=cards[j]
             cards[j]=c
@@ -37,7 +37,7 @@ def disp(stack):
     for g in range(len(stack)):
         draw_card((size[0]/(len(stack)+1)),100,(10+(size[0]/(len(stack)+1))*g),10,stack[g],screen)
     pygame.display.flip()
-    
+
 BLACK = (  0,   0,   0)
 WHITE = (255, 255, 255)
 BLUE =  (  0,   0, 255)
@@ -51,6 +51,7 @@ order=[1,0,1,0,1,0,1,4,3,0,1,0,1,0,1,0,1,0,1]
 dis=[]
 pygame.init()
 pygame.display.set_caption("Card Dealing")
+
 for i in range(num_decks):
     decks.append(Deck())
 for i in decks:
@@ -59,6 +60,7 @@ for i in decks:
         car.append(j)
 car,dis=shuffle(car,dis)
 for i in order:
+        
     if(i==1):
         print("Deal")
         cars=""
@@ -83,4 +85,10 @@ while not done:
             done=True
     screen.fill(GREEN)
     disp(on_table)
+    car,dis=Burn(car,dis)
+    car,on_table=Deal(car,on_table)
+    if(len(on_table)>10):
+        on_table,dis=clear_table(on_table,dis)
+        car,dis=shuffle(car,dis)
+    time.sleep(1)
     
